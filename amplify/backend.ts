@@ -2,6 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { Stack } from 'aws-cdk-lib';
 import { regulatoryAgentBuilder } from './agents/regulatory/regulatoryAgent';
+import { rrcInsightsAgentBuilder } from './agents/rrcInsightsAgent/rrcInsightsAgent';
 import { defineBackend } from '@aws-amplify/backend';
 import { auth } from './auth/resource';
 import {
