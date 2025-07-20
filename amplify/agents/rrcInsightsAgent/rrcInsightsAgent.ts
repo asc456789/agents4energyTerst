@@ -2,7 +2,7 @@ import { Agent } from 'aws-cdk-lib/aws-bedrock';
 import { Stack } from 'aws-cdk-lib';
 import { Function as LambdaFunction } from 'aws-cdk-lib/aws-lambda';
 
-export function rrcInsightsAgentBuilder(stack: Stack, lambdaFunction: LambdaFunction) {
+export function rrcInsightsAgentBuilder(stack: Stack, lambdaFunction: LambdaFunction): Agent {
   const rrcInsightsAgent = new Agent(stack, 'RRCInsightsAgent', {
     agentName: 'RRCInsightsAgent',
     foundationModel: 'anthropic.claude-3-sonnet-20240229-v1:0',
@@ -12,8 +12,8 @@ export function rrcInsightsAgentBuilder(stack: Stack, lambdaFunction: LambdaFunc
         actionGroupName: 'auroraQueryAgent',
         description: 'Executes natural language SQL queries on Aurora PostgreSQL',
         function: {
-          lambda: lambdaFunction, // ✅ This must be a LambdaFunction object
-          functionName: 'freeform_query' // ✅ Name that Bedrock Agent will call
+          lambda: lambdaFunction,
+          functionName: 'freeform_query'
         },
         parameters: [
           {
