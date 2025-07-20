@@ -17,9 +17,9 @@ export function rrcInsightsAgentBuilder(stack: Stack, lambdaFunction: LambdaFunc
         },
         parameters: [
           {
-            name: 'query',
+            name: 'user_question',  // ✅ This must match what Bedrock expects
             type: 'string',
-            description: 'Natural language query to be translated to SQL',
+            description: 'Natural language query to be translated to SQL'
           }
         ]
       }
