@@ -324,7 +324,7 @@ backend.addOutput({
 const rrcInsightsAgentStack = backend.createStack('rrcInsightsAgentStack');
 
 // Build the Bedrock agent, passing the Lambda function used for action group
-const { rrcInsightsAgent } = rrcInsightsAgentBuilder(
+const rrcInsightsAgent = rrcInsightsAgentBuilder(
   rrcInsightsAgentStack,
   backend.invokeBedrockAgentFunction.resources.lambda
 );
