@@ -318,7 +318,17 @@ backend.addOutput({
   },
 })
 
+///////////////////////////////////////////////////////////
+/////// Create the RRC Insights Agent Stack ///////////////
+///////////////////////////////////////////////////////////
+const rrcInsightsAgentStack = backend.createStack('rrcInsightsAgentStack');
+const { rrcInsightsAgent } = rrcInsightsAgentBuilder(rrcInsightsAgentStack, backend.invokeBedrockAgentFunction.resources.lambda);
 
+backend.addOutput({
+  custom: {
+    rrcInsightsAgentId: rrcInsightsAgent.attrAgentId,
+  },
+});
 
 ///////////////////////////////////////////////////////////
 /////// Create the Configurator Stack /////////////////////
