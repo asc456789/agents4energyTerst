@@ -322,13 +322,27 @@ backend.addOutput({
 /////// Create the RRC Insights Agent Stack ///////////////
 ///////////////////////////////////////////////////////////
 const rrcInsightsAgentStack = backend.createStack('rrcInsightsAgentStack');
-const { rrcInsightsAgent } = rrcInsightsAgentBuilder(rrcInsightsAgentStack, backend.invokeBedrockAgentFunction.resources.lambda);
 
+// Build the Bedrock agent, passing the Lambda function used for action group
+const { rrcInsightsAgent } = rrcInsightsAgentBuilder(
+  rrcInsightsAgentStack,
+  backend.invokeBedrockAgentFunction.resources.lambda
+);
+
+// ✅ Allow Bedrock to invoke the Lambda used in the action group
+backend.invokeBedrockAgentFunction.resources.lambda.addPermission('AllowBedrockToInvokeLambda', {
+  principal: new iam.ServicePrincipal('bedrock.amazonaws.com'),
+  action: 'lambda:InvokeFunction',
+  sourceArn: `arn:aws:bedrock:${backend.auth.stack.region}:${backend.auth.stack.account}:agent-alias/*`, // OK for dev/test
+});
+
+// Optional: Use agent ID and alias outputs to restrict further if needed
 backend.addOutput({
   custom: {
     rrcInsightsAgentId: rrcInsightsAgent.attrAgentId,
   },
 });
+
 
 ///////////////////////////////////////////////////////////
 /////// Create the Configurator Stack /////////////////////
